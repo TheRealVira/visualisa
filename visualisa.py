@@ -45,7 +45,7 @@ args = parser.parse_args()
 # Create structure
 pathlib.Path(GENERATIONS_DIR).mkdir(parents=True, exist_ok=True)
 
-# populationulate variables
+# Populating variables
 GOAL_IMG = Image.open(args.input)
 GOAL_SUFFIX = pathlib.Path(args.input).suffix
 MAX_SEQUENCE_SECTION_SIZE = int(args.maxvert) * 5
