@@ -145,10 +145,12 @@ def initialize(population):
 
 
 def evolve(population):
-    weightedP = random.choices(population[:len(CHOICE_WEIGHTS)], CHOICE_WEIGHTS, k=len(CHOICE_WEIGHTS)*2)
+    weightedP = random.choices(
+        population[: len(CHOICE_WEIGHTS)], CHOICE_WEIGHTS, k=len(CHOICE_WEIGHTS) * 2
+    )
     for i in range(int(args.children)):
-        population.append(entity(weightedP[i], weightedP[i+len(CHOICE_WEIGHTS)-1]))
-    
+        population.append(entity(weightedP[i], weightedP[i + len(CHOICE_WEIGHTS) - 1]))
+
     population.sort(key=lambda x: x.fitness)
     return population[: int(args.population)]
 
