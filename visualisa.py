@@ -150,8 +150,7 @@ def evolve(population):
 
 if __name__ == "__main__":
     population = initialize([])
-    i = 0
-    while sum(map(lambda x: x.fitness, population)) / int(args.population) > 5:
+    for i in range(0, int(args.iterations)):
         population = evolve(population)
         if i % 1000 == 0:
             population[0].saveImage(GENERATIONS_DIR + str(i) + GOAL_SUFFIX)
@@ -164,6 +163,5 @@ if __name__ == "__main__":
                 )
                 + "\t/ 100%"
             )
-        i += 1
 
     population[0].saveImage(GENERATIONS_DIR + "best" + GOAL_SUFFIX)
