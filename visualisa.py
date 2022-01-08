@@ -67,7 +67,7 @@ class chromosome(object):
         else:
             self.__dict__.update(inheritGene)
 
-        self.proteins = vars(self)
+        self.proteins = list(vars(self).items())
 
     def generateVertex(self):
         return (random.randrange(size_x), random.randrange(size_y))
@@ -78,13 +78,6 @@ class chromosome(object):
             random.randrange(256),
             random.randrange(256),
             random.randrange(68),
-        ]
-
-    def getProteins(self):
-        return [
-            (proteinK, self.proteins[proteinK])
-            for proteinK in self.proteins.keys()
-            if proteinK != "proteins"
         ]
 
 
@@ -114,7 +107,7 @@ class entity(object):
         return [
             protein
             for aChromosome in self.chromosomes
-            for protein in aChromosome.getProteins()
+            for protein in aChromosome.proteins
         ]
 
     def breed(self, p0, p1):
@@ -124,7 +117,7 @@ class entity(object):
             list(range(len(dna0))), round(random.random() * len(dna0))
         ):
             combinedDNA[i] = dna0[i]
-        return zip(*[iter(combinedDNA)] * len(p0.chromosomes[0].getProteins()))
+        return zip(*[iter(combinedDNA)] * len(p0.chromosomes[0].proteins))
 
     def saveImage(self, filename):
         self.image.save(filename, GOAL_IMG.format)
