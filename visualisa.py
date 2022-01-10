@@ -46,7 +46,7 @@ args = parser.parse_args()
 pathlib.Path(GENERATIONS_DIR).mkdir(parents=True, exist_ok=True)
 
 # Populating variables
-GOAL_IMG = Image.open(args.input)
+GOAL_IMG = Image.open(args.input).convert('RGB')
 GOAL_SUFFIX = pathlib.Path(args.input).suffix
 MAX_SEQUENCE_SECTION_SIZE = int(args.maxvert) * 5
 size_x, size_y = GOAL_IMG.size
@@ -101,7 +101,7 @@ class entity(object):
                 fill=tuple(aChromosome.color),
             )
         del drawer
-        return image
+        return image.convert("RGB")
 
     def getDNA(self):
         return [
