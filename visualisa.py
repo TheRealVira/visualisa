@@ -40,13 +40,19 @@ parser.add_argument(
 parser.add_argument(
     "--maxvert", help="Maximum vertices for a chromosome.", type=int, default=4
 )
+parser.add_argument(
+    "--runforever",
+    help="if defined; runs forever till cancelled by user.",
+    default=False,
+    action="store_true",
+)
 args = parser.parse_args()
 
 # Create structure
 pathlib.Path(GENERATIONS_DIR).mkdir(parents=True, exist_ok=True)
 
 # Populating variables
-GOAL_IMG = Image.open(args.input).convert('RGB')
+GOAL_IMG = Image.open(args.input).convert("RGB")
 GOAL_SUFFIX = pathlib.Path(args.input).suffix
 MAX_SEQUENCE_SECTION_SIZE = int(args.maxvert) * 5
 size_x, size_y = GOAL_IMG.size
@@ -150,7 +156,8 @@ def evolve(population):
 
 if __name__ == "__main__":
     population = initialize([])
-    for i in range(0, int(args.iterations)):
+    i = 0
+    while i < int(args.iterations) or args.runforever:
         population = evolve(population)
         if i % 1000 == 0:
             population[0].saveImage(GENERATIONS_DIR + str(i) + GOAL_SUFFIX)
@@ -163,5 +170,6 @@ if __name__ == "__main__":
                 )
                 + "\t/ 100%"
             )
+        i += 1
 
     population[0].saveImage(GENERATIONS_DIR + "best" + GOAL_SUFFIX)
